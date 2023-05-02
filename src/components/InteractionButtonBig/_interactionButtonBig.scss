@@ -1,0 +1,18 @@
+@use "../../abstracts/colors" as c;
+@use "../../abstracts/variables" as v;
+
+.interaction-button-big {
+  background: c.$moderate-blue;
+  border: none;
+  border-radius: v.$block-border-radius;
+  padding: 0.75em 1.5em;
+  cursor: pointer;
+  font: inherit;
+  color: c.$white;
+  text-transform: uppercase;
+  transition: v.$main-transition;
+
+  &:where(:hover, :focus-visible) {
+    opacity: 0.5;
+  }
+}

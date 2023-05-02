@@ -1,0 +1,25 @@
+@use "../../abstracts/colors" as c;
+@use "../../abstracts/variables" as v;
+@use "../../abstracts/mixins" as *;
+
+.interaction-button {
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  @include flex(row, center, center);
+  gap: 0.5rem;
+  color: c.$moderate-blue;
+  font: inherit;
+  font-weight: 500;
+  outline-offset: 0.25em;
+  transition: v.$main-transition;
+
+  &--delete {
+    color: c.$soft-red;
+  }
+
+  &:where(:hover, :focus-visible) {
+    opacity: 0.5;
+  }
+}

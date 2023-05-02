@@ -1,0 +1,51 @@
+@use "../../abstracts/colors" as c;
+@use "../../abstracts/variables" as v;
+@use "../../abstracts/mixins" as *;
+@use "../../base/functions" as func;
+
+.add-comment-block {
+  @include flex(row, flex-start, flex-start);
+  gap: v.$block-inner-space;
+  background: c.$white;
+  border-radius: v.$block-border-radius;
+  padding: calc(v.$block-inner-space * 1.5);
+  @media (width <= func.rem(768)) {
+    position: relative;
+    @include flex(column, flex-end, flex-end);
+  }
+
+  &__image {
+    width: 2.5rem;
+    height: 2.5rem;
+    @media (width <= func.rem(768)) {
+      position: absolute;
+      left: calc(v.$block-inner-space * 1.5);
+      bottom: calc(v.$block-inner-space * 1.5);
+      translate: 0 calc(func.rem(4) * -1);
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
+  &__text-area {
+    resize: none;
+    flex-grow: 1;
+    height: func.rem(80);
+    padding-block: calc(v.$block-inner-space * 0.75);
+    padding-inline: v.$block-inner-space;
+    outline: none;
+    border-color: c.$light-gray;
+    border-radius: v.$block-border-radius;
+    font: inherit;
+    color: c.$dark-blue;
+    transition: v.$main-transition;
+    @media (width <= func.rem(768)) {
+      width: 100%;
+      height: func.rem(100);
+    }
+
+    &:where(:hover, :focus-visible) {
+      border-color: c.$moderate-blue;
+    }
+  }
+}

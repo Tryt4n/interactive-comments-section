@@ -1,0 +1,23 @@
+@use "../../abstracts/colors" as c;
+@use "../../abstracts/variables" as v;
+@use "../../abstracts/mixins" as *;
+@use "../../base/functions" as func;
+
+body {
+  background: c.$light-gray;
+  display: grid;
+  place-content: center;
+  padding: 2rem;
+  @media (width <= func.rem(1024)) {
+    padding-inline: 0;
+  }
+}
+
+.container {
+  @include flex(column);
+  gap: v.$block-inner-space;
+  margin-inline: auto;
+  @media (width < func.rem(768)) {
+    width: 95%;
+  }
+}
