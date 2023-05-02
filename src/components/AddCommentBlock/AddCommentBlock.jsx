@@ -9,10 +9,11 @@ export default function AddCommentBlock() {
         className="add-comment-block__image"
       />
       <textarea
-        name=""
-        id=""
+        name="add-comment"
+        id="add-comment"
         placeholder="Add a comment..."
         className="add-comment-block__text-area"
+        aria-label="Add a comment"
       ></textarea>
       <InteractionButtonsBig btnText="send" />
     </section>

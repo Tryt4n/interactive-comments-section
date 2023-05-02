@@ -4,6 +4,7 @@
 @use "../../base/functions" as func;
 
 body {
+  min-height: 100dvh;
   background: c.$light-gray;
   display: grid;
   place-content: center;
