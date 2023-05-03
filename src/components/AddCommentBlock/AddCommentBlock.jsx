@@ -15,7 +15,7 @@ export default function AddCommentBlock({ currentUser }) {
     const newCommentObj = {
       id: crypto.randomUUID(),
       content: newComment,
-      createdAt: "1 min ago",
+      createdAt: "1 second ago",
       score: 0,
       user: {
         image: currentUser.image,

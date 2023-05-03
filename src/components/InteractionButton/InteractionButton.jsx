@@ -1,6 +1,9 @@
-export default function InteractionButton({ isEdit, isDelete }) {
+export default function InteractionButton({ isEdit, isDelete, handleDeleteComment }) {
   return (
-    <button className="interaction-button">
+    <button
+      className="interaction-button"
+      onClick={handleDeleteComment}
+    >
       {!isEdit && !isDelete && (
         <>
           <img

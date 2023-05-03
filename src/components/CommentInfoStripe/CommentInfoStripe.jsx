@@ -4,7 +4,12 @@ import dateFormatter from "../../dateFormatter";
 
 import InteractionButton from "../InteractionButton/InteractionButton";
 
-export default function CommentInfoStripe({ userInformations, createdAt }) {
+export default function CommentInfoStripe({
+  userInformations,
+  createdAt,
+  handleDeleteComment,
+  isReply,
+}) {
   const { isCurrentUser } = useContext(DataContext);
 
   const formattedDate = dateFormatter(createdAt);
@@ -39,7 +44,11 @@ export default function CommentInfoStripe({ userInformations, createdAt }) {
       <div className="comment-info-stripe__btn-container">
         {isCurrentUser === userInformations.username ? (
           <>
-            <InteractionButton isDelete />
+            <InteractionButton
+              isDelete
+              handleDeleteComment={handleDeleteComment}
+              isReply={isReply}
+            />
             <InteractionButton isEdit />
           </>
         ) : (
