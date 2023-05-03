@@ -1,15 +1,21 @@
-import { createContext } from "react";
-import userData from "../userData.json";
+import { createContext, useState } from "react";
+import dataJSON from "../userData.json";
 
-const isCurrentUser = userData.currentUser.username;
+const isCurrentUser = dataJSON.currentUser.username;
 const DataContext = createContext({
-  data: userData,
+  data: dataJSON,
   isCurrentUser: isCurrentUser,
+  userData: {},
+  setUserData: () => {},
 });
 
 export function DataProvider({ children }) {
+  const [userData, setUserData] = useState(dataJSON);
+
   return (
-    <DataContext.Provider value={{ data: userData, isCurrentUser: isCurrentUser }}>
+    <DataContext.Provider
+      value={{ data: dataJSON, isCurrentUser: isCurrentUser, userData, setUserData }}
+    >
       {children}
     </DataContext.Provider>
   );

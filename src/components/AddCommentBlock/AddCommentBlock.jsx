@@ -1,6 +1,40 @@
+import { useContext, useEffect, useState } from "react";
+import DataContext from "../../context/DataContext";
+
 import InteractionButtonsBig from "../InteractionButtonBig/InteractionButtonsBig";
 
 export default function AddCommentBlock({ currentUser }) {
+  const { userData, setUserData } = useContext(DataContext);
+  const [newComment, setNewComment] = useState("");
+
+  function handleCommentChange(e) {
+    setNewComment(e.target.value);
+  }
+
+  function addNewComment() {
+    const newCommentObj = {
+      id: crypto.randomUUID(),
+      content: newComment,
+      createdAt: "1 min ago",
+      score: 0,
+      user: {
+        image: currentUser.image,
+        username: currentUser.username,
+      },
+      replies: [],
+    };
+    const updatedUserData = {
+      ...userData,
+      comments: [...userData.comments, newCommentObj],
+    };
+    setUserData(updatedUserData);
+    setNewComment("");
+  }
+
+  useEffect(() => {
+    console.log(userData);
+  }, [userData]);
+
   return (
     <section className="add-comment-block">
       <img
@@ -12,10 +46,17 @@ export default function AddCommentBlock({ currentUser }) {
         name="add-comment"
         id="add-comment"
         placeholder="Add a comment..."
-        className="add-comment-block__text-area"
         aria-label="Add a comment"
+        className="add-comment-block__text-area"
+        value={newComment}
+        onChange={handleCommentChange}
       ></textarea>
-      <InteractionButtonsBig btnText="send" />
+      <InteractionButtonsBig
+        btnText="send"
+        setUserData={setUserData}
+        commentText={newComment}
+        addNewComment={addNewComment}
+      />
     </section>
   );
 }

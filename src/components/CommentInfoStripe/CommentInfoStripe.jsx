@@ -37,7 +37,14 @@ export default function CommentInfoStripe({ userInformations, createdAt }) {
         </time>
       </div>
       <div className="comment-info-stripe__btn-container">
-        <InteractionButton />
+        {isCurrentUser === userInformations.username ? (
+          <>
+            <InteractionButton isDelete />
+            <InteractionButton isEdit />
+          </>
+        ) : (
+          <InteractionButton />
+        )}
       </div>
     </aside>
   );

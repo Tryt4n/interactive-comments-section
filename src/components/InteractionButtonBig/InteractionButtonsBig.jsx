@@ -1,3 +1,14 @@
-export default function InteractionButtonsBig({ btnText }) {
-  return <button className="interaction-button-big">{btnText}</button>;
+export default function InteractionButtonsBig({ btnText, addNewComment }) {
+  function addComment() {
+    addNewComment();
+  }
+
+  return (
+    <button
+      className="interaction-button-big"
+      onClick={addComment}
+    >
+      {btnText}
+    </button>
+  );
 }
