@@ -21,6 +21,7 @@
     color: c.$light-grayish-blue;
     transition: v.$main-transition;
     &:first-of-type {
+      padding-bottom: 0.75rem;
       @media (width > func.rem(768)) {
         border-top-left-radius: v.$block-border-radius;
         border-top-right-radius: v.$block-border-radius;

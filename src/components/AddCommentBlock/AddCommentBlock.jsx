@@ -1,10 +1,10 @@
 import InteractionButtonsBig from "../InteractionButtonBig/InteractionButtonsBig";
 
-export default function AddCommentBlock() {
+export default function AddCommentBlock({ currentUser }) {
   return (
     <section className="add-comment-block">
       <img
-        src="/images/image-juliusomo.png"
+        src={currentUser.image.png}
         alt="My Avatar"
         className="add-comment-block__image"
       />

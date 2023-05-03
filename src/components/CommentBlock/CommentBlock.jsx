@@ -1,17 +1,16 @@
 import CommentInfoStripe from "../CommentInfoStripe/CommentInfoStripe";
 import UpDownVoteBlock from "../UpDownVoteBlock/UpDownVoteBlock";
 
-export default function CommentBlock() {
+export default function CommentBlock({ comment, userInformations, createdAt, score }) {
   return (
     <article className="comment-block">
-      <UpDownVoteBlock />
+      <UpDownVoteBlock score={score} />
       <div className="comment-block__text-container">
-        <CommentInfoStripe isYou />
-        <p className="comment-block__comment-text">
-          Impressive! Though it seems the drag feature could be improved. But overall it looks
-          incredible. You've nailed the design and the responsiveness at various breakpoints works
-          really well.
-        </p>
+        <CommentInfoStripe
+          userInformations={userInformations}
+          createdAt={createdAt}
+        />
+        <p className="comment-block__comment-text">{comment}</p>
       </div>
     </article>
   );

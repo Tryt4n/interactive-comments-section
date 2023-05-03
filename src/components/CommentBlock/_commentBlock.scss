@@ -4,7 +4,7 @@
 @use "../../base/functions" as func;
 
 .comment-block {
-  @include flex();
+  @include flex(row, space-between);
   gap: calc(v.$block-inner-space * 1.5);
   padding: calc(v.$block-inner-space * 1.5);
   background: c.$white;
@@ -15,12 +15,14 @@
   }
 
   &__text-container {
-    max-width: 61ch;
+    flex-grow: 1;
+    width: 100%;
     @include flex(column);
     gap: v.$block-inner-space;
   }
 
   &__comment-text {
     color: c.$grayish-blue;
+    line-height: 1.4em;
   }
 }

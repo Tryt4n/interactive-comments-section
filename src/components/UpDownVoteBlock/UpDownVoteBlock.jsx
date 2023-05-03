@@ -1,4 +1,4 @@
-export default function UpDownVoteBlock() {
+export default function UpDownVoteBlock({ score }) {
   return (
     <div
       className="up-down-vote-block"
@@ -19,7 +19,7 @@ export default function UpDownVoteBlock() {
         className="up-down-vote-block__votes-text"
         aria-label="Votes"
       >
-        0
+        {score}
       </span>
       <button
         className="up-down-vote-block__btn"

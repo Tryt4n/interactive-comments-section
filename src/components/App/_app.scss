@@ -18,6 +18,7 @@ body {
   @include flex(column);
   gap: v.$block-inner-space;
   margin-inline: auto;
+  max-width: 69ch;
   @media (width < func.rem(768)) {
     width: 95%;
   }
