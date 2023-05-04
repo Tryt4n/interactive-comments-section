@@ -25,4 +25,9 @@
     color: c.$grayish-blue;
     line-height: 1.4em;
   }
+
+  &__replyingTo-text {
+    color: c.$moderate-blue;
+    font-weight: 500;
+  }
 }

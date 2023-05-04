@@ -1,16 +1,32 @@
+import { useContext } from "react";
+import DataContext from "../../context/DataContext";
+
+import AddCommentBlock from "../AddCommentBlock/AddCommentBlock";
 import CommentBlock from "../CommentBlock/CommentBlock";
 
 export default function CommentSection({ commentData }) {
+  const { userData } = useContext(DataContext);
+  const commentId = commentData.id;
+  const comment = commentData.content;
+  const userInformations = commentData.user;
+  const createdAt = commentData.createdAt;
+  const score = commentData.score;
+  const isReply = false;
+
   return (
-    <>
+    <section className="comment-section">
       <CommentBlock
-        key={commentData.id}
-        commentId={commentData.id}
-        comment={commentData.content}
-        userInformations={commentData.user}
-        createdAt={commentData.createdAt}
-        score={commentData.score}
-        isReply={false}
+        key={commentId}
+        commentId={commentId}
+        comment={comment}
+        userInformations={userInformations}
+        createdAt={createdAt}
+        score={score}
+        isReply={isReply}
+      />
+      <AddCommentBlock
+        btnText="reply"
+        currentUser={userData.currentUser}
       />
 
       {commentData.replies.length !== 0 && (
@@ -23,11 +39,12 @@ export default function CommentSection({ commentData }) {
               userInformations={replie.user}
               createdAt={replie.createdAt}
               score={replie.score}
-              isReply={true}
+              isReply={!isReply}
+              replyingTo={replie.replyingTo}
             />
           ))}
         </div>
       )}
-    </>
+    </section>
   );
 }

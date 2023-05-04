@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import DataContext from "../../context/DataContext";
 
 import InteractionButtonsBig from "../InteractionButtonBig/InteractionButtonsBig";
 
-export default function AddCommentBlock({ currentUser }) {
+export default function AddCommentBlock({ currentUser, btnText }) {
   const { userData, setUserData } = useContext(DataContext);
   const [newComment, setNewComment] = useState("");
 
@@ -17,6 +17,7 @@ export default function AddCommentBlock({ currentUser }) {
       content: newComment,
       createdAt: "1 second ago",
       score: 0,
+      index: userData.comments.length,
       user: {
         image: currentUser.image,
         username: currentUser.username,
@@ -31,12 +32,8 @@ export default function AddCommentBlock({ currentUser }) {
     setNewComment("");
   }
 
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
-
   return (
-    <section className="add-comment-block">
+    <article className={`add-comment-block ${btnText !== "send" && "comment-active"}`}>
       <img
         src={currentUser.image.png}
         alt="My Avatar"
@@ -52,11 +49,11 @@ export default function AddCommentBlock({ currentUser }) {
         onChange={handleCommentChange}
       ></textarea>
       <InteractionButtonsBig
-        btnText="send"
+        btnText={btnText}
         setUserData={setUserData}
         commentText={newComment}
         addNewComment={addNewComment}
       />
-    </section>
+    </article>
   );
 }

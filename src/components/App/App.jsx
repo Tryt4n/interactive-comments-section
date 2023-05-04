@@ -5,8 +5,7 @@ import AddCommentBlock from "../AddCommentBlock/AddCommentBlock";
 import CommentSection from "../CommentSection/CommentSection";
 
 export default function App() {
-  const { userData, setUserData } = useContext(DataContext);
-  console.log(userData);
+  const { userData } = useContext(DataContext);
 
   return (
     <main className="container">
@@ -18,7 +17,10 @@ export default function App() {
           commentData={comment}
         />
       ))}
-      <AddCommentBlock currentUser={userData.currentUser} />
+      <AddCommentBlock
+        btnText="send"
+        currentUser={userData.currentUser}
+      />
     </main>
   );
 }

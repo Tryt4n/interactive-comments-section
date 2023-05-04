@@ -3,25 +3,30 @@
 @use "../../abstracts/mixins" as *;
 @use "../../base/functions" as func;
 
-.comment-section__subcomment {
+.comment-section {
   @include flex(column);
   gap: v.$block-inner-space;
-  position: relative;
-  padding-left: calc(v.$block-inner-space * 4 + func.rem(1));
-  @media (width <= func.rem(768)) {
-    padding-left: calc(v.$block-inner-space * 1 + func.rem(1));
-  }
-  &::before {
-    position: absolute;
-    content: "";
-    left: 0;
-    width: 1px;
-    height: 100%;
-    border-radius: 9999px;
-    background: c.$light-grayish-blue;
-    margin-left: calc(v.$block-inner-space * 2);
+
+  &__subcomment {
+    @include flex(column);
+    gap: v.$block-inner-space;
+    position: relative;
+    padding-left: calc(v.$block-inner-space * 4 + func.rem(1));
     @media (width <= func.rem(768)) {
-      margin-left: 0;
+      padding-left: calc(v.$block-inner-space * 1 + func.rem(1));
+    }
+    &::before {
+      position: absolute;
+      content: "";
+      left: 0;
+      width: 1px;
+      height: 100%;
+      border-radius: 9999px;
+      background: c.$light-grayish-blue;
+      margin-left: calc(v.$block-inner-space * 2);
+      @media (width <= func.rem(768)) {
+        margin-left: 0;
+      }
     }
   }
 }

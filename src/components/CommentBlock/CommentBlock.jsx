@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import DataContext from "../../context/DataContext";
 
 import CommentInfoStripe from "../CommentInfoStripe/CommentInfoStripe";
@@ -11,10 +11,59 @@ export default function CommentBlock({
   createdAt,
   score,
   isReply,
+  replyingTo,
 }) {
-  const { userData, setUserData } = useContext(DataContext);
+  const { userData, setUserData, searchForObject } = useContext(DataContext);
+  const [alreadyVoted, setAlreadyVoted] = useState(false);
+  const [votedType, setVotedType] = useState(null);
 
-  const handleDeleteComment = () => {
+  function addVote(commentIndex, replyParent, clickedComment, newComments, addedValue) {
+    commentIndex !== -1
+      ? (newComments[commentIndex].score += addedValue)
+      : (newComments[replyParent.index].replies[clickedComment.index].score += addedValue);
+  }
+
+  function subtractVote(commentIndex, replyParent, clickedComment, newComments, subtractedValue) {
+    commentIndex !== -1
+      ? (newComments[commentIndex].score -= subtractedValue)
+      : (newComments[replyParent.index].replies[clickedComment.index].score -= subtractedValue);
+  }
+
+  function handleVote(e) {
+    const commentIndex = userData.comments.findIndex((comment) => comment.id === commentId);
+    const clickedComment = searchForObject(userData, commentId);
+    const replyParent = userData.comments[clickedComment.parentIndex];
+
+    const newComments = [...userData.comments];
+
+    if (!alreadyVoted) {
+      if (e.target.id === "upVoteBtn") {
+        addVote(commentIndex, replyParent, clickedComment, newComments, 1);
+        setVotedType("upVote");
+      }
+      if (e.target.id === "downVoteBtn") {
+        subtractVote(commentIndex, replyParent, clickedComment, newComments, 1);
+        setVotedType("downVote");
+      }
+      setAlreadyVoted(true);
+    } else if (alreadyVoted) {
+      if (votedType === "upVote" && e.target.id === "downVoteBtn") {
+        subtractVote(commentIndex, replyParent, clickedComment, newComments, 2);
+        setVotedType("downVote");
+      }
+      if (votedType === "downVote" && e.target.id === "upVoteBtn") {
+        addVote(commentIndex, replyParent, clickedComment, newComments, 2);
+        setVotedType("upVote");
+      }
+    }
+
+    setUserData((prevState) => ({
+      ...prevState,
+      comments: newComments,
+    }));
+  }
+
+  function handleDeleteComment() {
     if (isReply) {
       const newComments = userData.comments.map((comment) => {
         const newReplies = comment.replies.filter((reply) => reply.id !== commentId);
@@ -34,11 +83,15 @@ export default function CommentBlock({
         comments: newComments,
       }));
     }
-  };
+  }
 
   return (
     <article className="comment-block">
-      <UpDownVoteBlock score={score} />
+      <UpDownVoteBlock
+        score={score}
+        commentId={commentId}
+        handleVote={handleVote}
+      />
       <div className="comment-block__text-container">
         <CommentInfoStripe
           userInformations={userInformations}
@@ -46,7 +99,21 @@ export default function CommentBlock({
           handleDeleteComment={handleDeleteComment}
           isReply={isReply}
         />
-        <p className="comment-block__comment-text">{comment}</p>
+        <p className="comment-block__comment-text">
+          {replyingTo && (
+            <>
+              <a
+                href="#"
+                className="comment-block__replyingTo-text"
+                title={`Go to ${replyingTo} profile`}
+              >
+                @{replyingTo}
+              </a>
+              &nbsp;
+            </>
+          )}
+          {comment}
+        </p>
       </div>
     </article>
   );

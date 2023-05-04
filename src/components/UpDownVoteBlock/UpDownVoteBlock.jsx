@@ -1,16 +1,18 @@
-export default function UpDownVoteBlock({ score }) {
+export default function UpDownVoteBlock({ score, handleVote }) {
   return (
     <div
       className="up-down-vote-block"
       role="group"
     >
       <button
+        id="upVoteBtn"
         className="up-down-vote-block__btn"
         type="button"
         aria-controls="votes-output"
         aria-label="Up Vote"
         aria-labelledby="voteup-label"
         aria-describedby="votes-output"
+        onClick={handleVote}
       >
         +
       </button>
@@ -22,12 +24,14 @@ export default function UpDownVoteBlock({ score }) {
         {score}
       </span>
       <button
+        id="downVoteBtn"
         className="up-down-vote-block__btn"
         type="button"
         aria-controls="votes-output"
         aria-label="Down Vote"
         aria-labelledby="votedown-label"
         aria-describedby="votes-output"
+        onClick={handleVote}
       >
         -
       </button>

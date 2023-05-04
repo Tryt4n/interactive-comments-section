@@ -48,4 +48,8 @@
       border-color: c.$moderate-blue;
     }
   }
+
+  &.comment-active {
+    margin-top: -0.5rem;
+  }
 }
