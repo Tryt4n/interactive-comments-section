@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext, useState } from "react";
 import DataContext from "../../context/DataContext";
 
 import AddCommentBlock from "../AddCommentBlock/AddCommentBlock";
@@ -13,6 +13,9 @@ export default function CommentSection({ commentData }) {
   const score = commentData.score;
   const isReply = false;
 
+  const [isReplyBoxShown, setIsReplyBoxShown] = useState(false);
+  const [selectedCommentId, setSelectedCommentId] = useState(null);
+
   return (
     <section className="comment-section">
       <CommentBlock
@@ -23,26 +26,47 @@ export default function CommentSection({ commentData }) {
         createdAt={createdAt}
         score={score}
         isReply={isReply}
+        isReplyBoxShown={isReplyBoxShown}
+        setIsReplyBoxShown={setIsReplyBoxShown}
+        setSelectedCommentId={setSelectedCommentId}
       />
-      <AddCommentBlock
-        btnText="reply"
-        commentId={commentId}
-        currentUser={userData.currentUser}
-      />
+      {isReplyBoxShown && selectedCommentId === commentId && (
+        <AddCommentBlock
+          btnText="reply"
+          commentId={commentId}
+          currentUser={userData.currentUser}
+          isReplyBoxShown={isReplyBoxShown}
+          setIsReplyBoxShown={setIsReplyBoxShown}
+        />
+      )}
 
       {commentData.replies.length !== 0 && (
         <div className="comment-section__subcomment">
           {commentData.replies.map((replie) => (
-            <CommentBlock
-              key={replie.id}
-              commentId={replie.id}
-              comment={replie.content}
-              userInformations={replie.user}
-              createdAt={replie.createdAt}
-              score={replie.score}
-              isReply={!isReply}
-              replyingTo={replie.replyingTo}
-            />
+            <React.Fragment key={replie.id}>
+              <CommentBlock
+                commentId={replie.id}
+                comment={replie.content}
+                userInformations={replie.user}
+                createdAt={replie.createdAt}
+                score={replie.score}
+                isReply={!isReply}
+                replyingTo={replie.replyingTo}
+                isReplyBoxShown={isReplyBoxShown}
+                setIsReplyBoxShown={setIsReplyBoxShown}
+                setSelectedCommentId={setSelectedCommentId}
+              />
+              {isReplyBoxShown && selectedCommentId === replie.id && (
+                <AddCommentBlock
+                  btnText="reply"
+                  commentId={commentId}
+                  currentUser={userData.currentUser}
+                  isReplyBoxShown={isReplyBoxShown}
+                  setIsReplyBoxShown={setIsReplyBoxShown}
+                  replie={replie}
+                />
+              )}
+            </React.Fragment>
           ))}
         </div>
       )}

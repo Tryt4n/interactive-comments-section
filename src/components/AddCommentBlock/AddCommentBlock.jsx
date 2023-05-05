@@ -3,7 +3,13 @@ import DataContext from "../../context/DataContext";
 
 import InteractionButtonsBig from "../InteractionButtonBig/InteractionButtonsBig";
 
-export default function AddCommentBlock({ currentUser, btnText, commentId }) {
+export default function AddCommentBlock({
+  currentUser,
+  btnText,
+  commentId,
+  isReplyBoxShown,
+  setIsReplyBoxShown,
+}) {
   const { userData, setUserData, searchForObject } = useContext(DataContext);
   const commentBlockRef = useRef(null);
   const [newComment, setNewComment] = useState("");
@@ -33,7 +39,6 @@ export default function AddCommentBlock({ currentUser, btnText, commentId }) {
     };
     setUserData(updatedUserData);
     setNewComment("");
-    commentBlockRef.current.scrollIntoView({ behavior: "smooth" });
   }
 
   function addNewReply() {
@@ -65,7 +70,7 @@ export default function AddCommentBlock({ currentUser, btnText, commentId }) {
 
   return (
     <article
-      className={`add-comment-block ${btnText !== "send" && "comment-active"}`}
+      className={`add-comment-block ${btnText !== "send" ? "comment-active" : ""}`}
       ref={commentBlockRef}
     >
       <img
@@ -87,6 +92,8 @@ export default function AddCommentBlock({ currentUser, btnText, commentId }) {
         setUserData={setUserData}
         commentText={newComment}
         addNewComment={parentComment == null ? addNewComment : addNewReply}
+        isReplyBoxShown={isReplyBoxShown}
+        setIsReplyBoxShown={setIsReplyBoxShown}
       />
     </article>
   );

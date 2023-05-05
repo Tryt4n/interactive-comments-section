@@ -8,7 +8,10 @@ export default function CommentInfoStripe({
   userInformations,
   createdAt,
   handleDeleteComment,
-  isReply,
+  commentId,
+  isReplyBoxShown,
+  setIsReplyBoxShown,
+  setSelectedCommentId,
 }) {
   const { isCurrentUser } = useContext(DataContext);
 
@@ -47,12 +50,22 @@ export default function CommentInfoStripe({
             <InteractionButton
               isDelete
               handleDeleteComment={handleDeleteComment}
-              isReply={isReply}
             />
             <InteractionButton isEdit />
+            {/* <InteractionButton
+              commentId={commentId}
+              isReplyBoxShown={isReplyBoxShown}
+              setIsReplyBoxShown={setIsReplyBoxShown}
+              setSelectedCommentId={setSelectedCommentId}
+            /> */}
           </>
         ) : (
-          <InteractionButton />
+          <InteractionButton
+            commentId={commentId}
+            isReplyBoxShown={isReplyBoxShown}
+            setIsReplyBoxShown={setIsReplyBoxShown}
+            setSelectedCommentId={setSelectedCommentId}
+          />
         )}
       </div>
     </aside>

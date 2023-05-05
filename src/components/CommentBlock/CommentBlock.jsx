@@ -12,10 +12,14 @@ export default function CommentBlock({
   score,
   isReply,
   replyingTo,
+  isReplyBoxShown,
+  setIsReplyBoxShown,
+  setSelectedCommentId,
 }) {
-  const { userData, setUserData, searchForObject } = useContext(DataContext);
+  const { userData, setUserData, searchForObject, isCurrentUser } = useContext(DataContext);
   const [alreadyVoted, setAlreadyVoted] = useState(false);
   const [votedType, setVotedType] = useState(null);
+  const [warningInfo, setWarningInfo] = useState(false);
 
   function addVote(commentIndex, replyParent, clickedComment, newComments, addedValue) {
     commentIndex !== -1
@@ -30,6 +34,8 @@ export default function CommentBlock({
   }
 
   function handleVote(e) {
+    if (userInformations.username === isCurrentUser) return setWarningInfo(true);
+
     const commentIndex = userData.comments.findIndex((comment) => comment.id === commentId);
     const clickedComment = searchForObject(userData, commentId);
     const replyParent =
@@ -38,7 +44,6 @@ export default function CommentBlock({
         : null;
 
     const newComments = [...userData.comments];
-
     if (!alreadyVoted) {
       if (e.target.id === "upVoteBtn") {
         addVote(commentIndex, replyParent, clickedComment, newComments, 1);
@@ -88,6 +93,12 @@ export default function CommentBlock({
     }
   }
 
+  if (warningInfo) {
+    setTimeout(() => {
+      setWarningInfo(false);
+    }, 2500);
+  }
+
   return (
     <article className="comment-block">
       <UpDownVoteBlock
@@ -95,12 +106,23 @@ export default function CommentBlock({
         commentId={commentId}
         handleVote={handleVote}
       />
+      {warningInfo && (
+        <dialog
+          open={warningInfo}
+          className="comment-block__warning-info"
+        >
+          You can&apos;t vote for yourself.
+        </dialog>
+      )}
       <div className="comment-block__text-container">
         <CommentInfoStripe
           userInformations={userInformations}
           createdAt={createdAt}
           handleDeleteComment={handleDeleteComment}
-          isReply={isReply}
+          commentId={commentId}
+          isReplyBoxShown={isReplyBoxShown}
+          setIsReplyBoxShown={setIsReplyBoxShown}
+          setSelectedCommentId={setSelectedCommentId}
         />
         <p className="comment-block__comment-text">
           {replyingTo && (

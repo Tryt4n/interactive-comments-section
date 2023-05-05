@@ -1,6 +1,14 @@
-export default function InteractionButtonsBig({ btnText, addNewComment }) {
+export default function InteractionButtonsBig({
+  btnText,
+  addNewComment,
+  isReplyBoxShown,
+  setIsReplyBoxShown,
+}) {
   function addComment() {
     addNewComment();
+    if (isReplyBoxShown !== undefined) {
+      setIsReplyBoxShown(!isReplyBoxShown);
+    }
   }
 
   return (
