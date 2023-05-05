@@ -1,8 +1,11 @@
 import { useContext, useState } from "react";
 import DataContext from "../../context/DataContext";
 
+import TextareaAutosize from "react-textarea-autosize";
+
 import CommentInfoStripe from "../CommentInfoStripe/CommentInfoStripe";
 import UpDownVoteBlock from "../UpDownVoteBlock/UpDownVoteBlock";
+import InteractionButtonsBig from "../InteractionButtonBig/InteractionButtonsBig";
 
 export default function CommentBlock({
   commentId,
@@ -19,6 +22,7 @@ export default function CommentBlock({
   const { userData, setUserData, searchForObject, isCurrentUser } = useContext(DataContext);
   const [alreadyVoted, setAlreadyVoted] = useState(false);
   const [votedType, setVotedType] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
   const [warningInfo, setWarningInfo] = useState(false);
 
   function addVote(commentIndex, replyParent, clickedComment, newComments, addedValue) {
@@ -98,7 +102,8 @@ export default function CommentBlock({
       setWarningInfo(false);
     }, 2500);
   }
-
+  console.log(isCurrentUser);
+  console.log(userInformations);
   return (
     <article className="comment-block">
       <UpDownVoteBlock
@@ -108,6 +113,7 @@ export default function CommentBlock({
       />
       {warningInfo && (
         <dialog
+          aria-label="warning info"
           open={warningInfo}
           className="comment-block__warning-info"
         >
@@ -124,21 +130,33 @@ export default function CommentBlock({
           setIsReplyBoxShown={setIsReplyBoxShown}
           setSelectedCommentId={setSelectedCommentId}
         />
-        <p className="comment-block__comment-text">
-          {replyingTo && (
-            <>
-              <a
-                href="#"
-                className="comment-block__replyingTo-text"
-                title={`Go to ${replyingTo} profile`}
-              >
-                @{replyingTo}
-              </a>
-              &nbsp;
-            </>
-          )}
-          {comment}
-        </p>
+        {!isEditing && userInformations.username !== isCurrentUser ? (
+          <p className="comment-block__comment-text">
+            {replyingTo && (
+              <>
+                <a
+                  href="#"
+                  className="comment-block__replyingTo-text"
+                  title={`Go to ${replyingTo} profile`}
+                >
+                  @{replyingTo}
+                </a>
+                &nbsp;
+              </>
+            )}
+            {comment}
+          </p>
+        ) : (
+          <div className="comment-block__textarea-wrapper">
+            <TextareaAutosize
+              className="comment-block__textarea"
+              aria-label="Change Comment"
+              value={`${replyingTo === undefined ? "" : `@${replyingTo} `}${comment}`}
+              minRows={3}
+            />
+            <InteractionButtonsBig btnText="update" />
+          </div>
+        )}
       </div>
     </article>
   );

@@ -14,7 +14,7 @@ export default function InteractionButtonsBig({
   return (
     <button
       className="interaction-button-big"
-      onClick={addComment}
+      onClick={btnText !== "update" ? addComment : console.log("It will be update")}
     >
       {btnText}
     </button>

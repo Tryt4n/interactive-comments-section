@@ -27,7 +27,7 @@
     }
   }
 
-  &__text-area {
+  &__textarea {
     resize: none;
     flex-grow: 1;
     height: func.rem(80);
@@ -37,6 +37,7 @@
     border-color: c.$light-gray;
     border-radius: v.$block-border-radius;
     font: inherit;
+    line-height: 1.5em;
     color: c.$dark-blue;
     transition: v.$main-transition;
     @media (width <= func.rem(768)) {

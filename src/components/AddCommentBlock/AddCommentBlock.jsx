@@ -1,6 +1,8 @@
 import { useContext, useState, useRef } from "react";
 import DataContext from "../../context/DataContext";
 
+import TextareaAutosize from "react-textarea-autosize";
+
 import InteractionButtonsBig from "../InteractionButtonBig/InteractionButtonsBig";
 
 export default function AddCommentBlock({
@@ -37,8 +39,10 @@ export default function AddCommentBlock({
       ...userData,
       comments: [...userData.comments, newCommentObj],
     };
-    setUserData(updatedUserData);
-    setNewComment("");
+    if (newComment !== "") {
+      setUserData(updatedUserData);
+      setNewComment("");
+    }
   }
 
   function addNewReply() {
@@ -62,9 +66,11 @@ export default function AddCommentBlock({
         comment.id === commentId ? updatedComment : comment
       );
       const updatedUserData = { ...userData, comments: updatedComments };
-      setUserData(updatedUserData);
-      setNewComment("");
-      commentBlockRef.current.scrollIntoView({ behavior: "smooth" });
+      if (newComment !== "") {
+        setUserData(updatedUserData);
+        setNewComment("");
+        commentBlockRef.current.scrollIntoView({ behavior: "smooth" });
+      }
     }
   }
 
@@ -78,15 +84,14 @@ export default function AddCommentBlock({
         alt="My Avatar"
         className="add-comment-block__image"
       />
-      <textarea
-        name="add-comment"
-        id="add-comment"
+      <TextareaAutosize
         placeholder="Add a comment..."
         aria-label="Add a comment"
-        className="add-comment-block__text-area"
+        className="add-comment-block__textarea"
+        minRows={3}
         value={newComment}
         onChange={handleCommentChange}
-      ></textarea>
+      />
       <InteractionButtonsBig
         btnText={btnText}
         setUserData={setUserData}
