@@ -32,7 +32,10 @@ export default function CommentBlock({
   function handleVote(e) {
     const commentIndex = userData.comments.findIndex((comment) => comment.id === commentId);
     const clickedComment = searchForObject(userData, commentId);
-    const replyParent = userData.comments[clickedComment.parentIndex];
+    const replyParent =
+      clickedComment.parentIndex !== undefined
+        ? userData.comments[clickedComment.parentIndex]
+        : null;
 
     const newComments = [...userData.comments];
 

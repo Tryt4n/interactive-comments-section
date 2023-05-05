@@ -26,6 +26,7 @@ export default function CommentSection({ commentData }) {
       />
       <AddCommentBlock
         btnText="reply"
+        commentId={commentId}
         currentUser={userData.currentUser}
       />
 

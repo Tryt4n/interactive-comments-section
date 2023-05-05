@@ -1,15 +1,18 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import DataContext from "../../context/DataContext";
 
 import InteractionButtonsBig from "../InteractionButtonBig/InteractionButtonsBig";
 
-export default function AddCommentBlock({ currentUser, btnText }) {
-  const { userData, setUserData } = useContext(DataContext);
+export default function AddCommentBlock({ currentUser, btnText, commentId }) {
+  const { userData, setUserData, searchForObject } = useContext(DataContext);
+  const commentBlockRef = useRef(null);
   const [newComment, setNewComment] = useState("");
 
   function handleCommentChange(e) {
     setNewComment(e.target.value);
   }
+
+  const parentComment = searchForObject(userData, commentId);
 
   function addNewComment() {
     const newCommentObj = {
@@ -30,10 +33,41 @@ export default function AddCommentBlock({ currentUser, btnText }) {
     };
     setUserData(updatedUserData);
     setNewComment("");
+    commentBlockRef.current.scrollIntoView({ behavior: "smooth" });
+  }
+
+  function addNewReply() {
+    if (parentComment !== null) {
+      const newReplyObj = {
+        id: crypto.randomUUID(),
+        content: newComment,
+        createdAt: "1 second ago",
+        score: 0,
+        parentIndex: parentComment.index,
+        index: parentComment.replies.length,
+        replyingTo: parentComment.user.username,
+        user: {
+          image: currentUser.image,
+          username: currentUser.username,
+        },
+      };
+      const updatedReplies = [...parentComment.replies, newReplyObj];
+      const updatedComment = { ...parentComment, replies: updatedReplies };
+      const updatedComments = userData.comments.map((comment) =>
+        comment.id === commentId ? updatedComment : comment
+      );
+      const updatedUserData = { ...userData, comments: updatedComments };
+      setUserData(updatedUserData);
+      setNewComment("");
+      commentBlockRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   }
 
   return (
-    <article className={`add-comment-block ${btnText !== "send" && "comment-active"}`}>
+    <article
+      className={`add-comment-block ${btnText !== "send" && "comment-active"}`}
+      ref={commentBlockRef}
+    >
       <img
         src={currentUser.image.png}
         alt="My Avatar"
@@ -52,7 +86,7 @@ export default function AddCommentBlock({ currentUser, btnText }) {
         btnText={btnText}
         setUserData={setUserData}
         commentText={newComment}
-        addNewComment={addNewComment}
+        addNewComment={parentComment == null ? addNewComment : addNewReply}
       />
     </article>
   );
