@@ -124,6 +124,7 @@ export default function CommentBlock({
       />
       {warningInfoVote && (
         <dialog
+          role="alert"
           aria-label="warning info"
           open={warningInfoVote}
           className="comment-block__warning-info"

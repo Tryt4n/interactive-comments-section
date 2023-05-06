@@ -22,11 +22,13 @@ export default function AddCommentBlock({
 
   const parentComment = searchForObject(userData, commentId);
 
+  const date = new Date();
+
   function addNewComment() {
     const newCommentObj = {
       id: crypto.randomUUID(),
       content: newComment,
-      createdAt: "1 second ago",
+      createdAt: date,
       score: 0,
       index: userData.comments.length,
       user: {

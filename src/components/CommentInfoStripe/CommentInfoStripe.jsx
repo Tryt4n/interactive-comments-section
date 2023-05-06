@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import DataContext from "../../context/DataContext";
-import dateFormatter from "../../dateFormatter";
 
 import InteractionButton from "../InteractionButton/InteractionButton";
+
+import { formatDistanceToNow } from "date-fns";
 
 export default function CommentInfoStripe({
   userInformations,
@@ -17,7 +18,17 @@ export default function CommentInfoStripe({
 }) {
   const { isCurrentUser } = useContext(DataContext);
 
-  const formattedDate = dateFormatter(createdAt);
+  const [formattedDate, setFormattedDate] = useState(
+    formatDistanceToNow(new Date(createdAt), { addSuffix: true })
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFormattedDate(formatDistanceToNow(new Date(createdAt), { addSuffix: true }));
+    }, 60100);
+
+    return () => clearInterval(interval);
+  }, [createdAt]);
 
   return (
     <aside className="comment-info-stripe">
@@ -39,11 +50,11 @@ export default function CommentInfoStripe({
           <mark className="comment-info-stripe__you-text">you</mark>
         )}
         <time
-          dateTime={formattedDate.toLocaleString()}
-          title={formattedDate.toLocaleString()}
+          dateTime={createdAt}
+          title={createdAt}
           className="comment-info-stripe__time-ago"
         >
-          {createdAt}
+          {formattedDate}
         </time>
       </div>
       <div className="comment-info-stripe__btn-container">
@@ -58,12 +69,6 @@ export default function CommentInfoStripe({
               isEditing={isEditing}
               setIsEditing={setIsEditing}
             />
-            {/* <InteractionButton
-              commentId={commentId}
-              isReplyBoxShown={isReplyBoxShown}
-              setIsReplyBoxShown={setIsReplyBoxShown}
-              setSelectedCommentId={setSelectedCommentId}
-            /> */}
           </>
         ) : (
           <InteractionButton
