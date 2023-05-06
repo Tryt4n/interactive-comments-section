@@ -6,6 +6,8 @@ export default function InteractionButton({
   isReplyBoxShown,
   setIsReplyBoxShown,
   setSelectedCommentId,
+  isEditing,
+  setIsEditing,
 }) {
   return (
     <>
@@ -26,7 +28,12 @@ export default function InteractionButton({
         </button>
       )}
       {isEdit && (
-        <button className="interaction-button">
+        <button
+          className="interaction-button"
+          onClick={() => {
+            setIsEditing(!isEditing);
+          }}
+        >
           <img
             src="/icons/icon-edit.svg"
             alt="Edit Icon"

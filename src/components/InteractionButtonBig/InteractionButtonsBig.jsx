@@ -3,6 +3,7 @@ export default function InteractionButtonsBig({
   addNewComment,
   isReplyBoxShown,
   setIsReplyBoxShown,
+  updateComment,
 }) {
   function addComment() {
     addNewComment();
@@ -12,11 +13,24 @@ export default function InteractionButtonsBig({
   }
 
   return (
-    <button
-      className="interaction-button-big"
-      onClick={btnText !== "update" ? addComment : console.log("It will be update")}
-    >
-      {btnText}
-    </button>
+    <>
+      {btnText !== "update" && (
+        <button
+          className="interaction-button-big"
+          onClick={addComment}
+        >
+          {btnText}
+        </button>
+      )}
+
+      {btnText === "update" && (
+        <button
+          className="interaction-button-big"
+          onClick={updateComment}
+        >
+          {btnText}
+        </button>
+      )}
+    </>
   );
 }

@@ -23,7 +23,9 @@ export default function CommentBlock({
   const [alreadyVoted, setAlreadyVoted] = useState(false);
   const [votedType, setVotedType] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [warningInfo, setWarningInfo] = useState(false);
+  const [myComment, setMyComment] = useState(comment);
+  const [editingCommentText, setEditingCommentText] = useState(comment);
+  const [warningInfoVote, setWarningInfoVote] = useState(false);
 
   function addVote(commentIndex, replyParent, clickedComment, newComments, addedValue) {
     commentIndex !== -1
@@ -38,7 +40,7 @@ export default function CommentBlock({
   }
 
   function handleVote(e) {
-    if (userInformations.username === isCurrentUser) return setWarningInfo(true);
+    if (userInformations.username === isCurrentUser) return setWarningInfoVote(true);
 
     const commentIndex = userData.comments.findIndex((comment) => comment.id === commentId);
     const clickedComment = searchForObject(userData, commentId);
@@ -75,6 +77,16 @@ export default function CommentBlock({
     }));
   }
 
+  function handleEdit(e) {
+    setEditingCommentText(e.target.value);
+  }
+  function updateComment() {
+    if (editingCommentText !== "") {
+      setMyComment(editingCommentText);
+      setIsEditing(!isEditing);
+    }
+  }
+
   function handleDeleteComment() {
     if (isReply) {
       const newComments = userData.comments.map((comment) => {
@@ -97,13 +109,12 @@ export default function CommentBlock({
     }
   }
 
-  if (warningInfo) {
+  if (warningInfoVote) {
     setTimeout(() => {
-      setWarningInfo(false);
+      setWarningInfoVote(false);
     }, 2500);
   }
-  console.log(isCurrentUser);
-  console.log(userInformations);
+
   return (
     <article className="comment-block">
       <UpDownVoteBlock
@@ -111,10 +122,10 @@ export default function CommentBlock({
         commentId={commentId}
         handleVote={handleVote}
       />
-      {warningInfo && (
+      {warningInfoVote && (
         <dialog
           aria-label="warning info"
-          open={warningInfo}
+          open={warningInfoVote}
           className="comment-block__warning-info"
         >
           You can&apos;t vote for yourself.
@@ -129,8 +140,10 @@ export default function CommentBlock({
           isReplyBoxShown={isReplyBoxShown}
           setIsReplyBoxShown={setIsReplyBoxShown}
           setSelectedCommentId={setSelectedCommentId}
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
         />
-        {!isEditing && userInformations.username !== isCurrentUser ? (
+        {!isEditing ? (
           <p className="comment-block__comment-text">
             {replyingTo && (
               <>
@@ -144,17 +157,23 @@ export default function CommentBlock({
                 &nbsp;
               </>
             )}
-            {comment}
+            <span>{myComment}</span>
           </p>
         ) : (
           <div className="comment-block__textarea-wrapper">
             <TextareaAutosize
-              className="comment-block__textarea"
+              className="comment-block__textarea comment-block__textarea--update-comment"
               aria-label="Change Comment"
-              value={`${replyingTo === undefined ? "" : `@${replyingTo} `}${comment}`}
               minRows={3}
+              value={editingCommentText}
+              onChange={handleEdit}
+              placeholder="Can't be blank"
             />
-            <InteractionButtonsBig btnText="update" />
+            <InteractionButtonsBig
+              btnText="update"
+              updateComment={updateComment}
+              editingCommentText={editingCommentText}
+            />
           </div>
         )}
       </div>
