@@ -52,21 +52,25 @@ export default function CommentBlock({
     if (userInformations.username === isCurrentUser) return setWarningInfoVote(true);
 
     if (!alreadyVoted) {
-      if (e.target.id === "upVoteBtn") {
+      if (e.target.id.startsWith("upVoteBtn")) {
+        // if (e.target.id === "upVoteBtn") {
         addVote(commentIndex, replyParent, clickedComment, newComments, 1);
         setVotedType("upVote");
       }
-      if (e.target.id === "downVoteBtn") {
+      if (e.target.id.startsWith("downVoteBtn")) {
+        // if (e.target.id === "downVoteBtn") {
         subtractVote(commentIndex, replyParent, clickedComment, newComments, 1);
         setVotedType("downVote");
       }
       setAlreadyVoted(true);
     } else if (alreadyVoted) {
-      if (votedType === "upVote" && e.target.id === "downVoteBtn") {
+      if (votedType === "upVote" && e.target.id.startsWith("downVoteBtn")) {
+        // if (votedType === "upVote" && e.target.id === "downVoteBtn") {
         subtractVote(commentIndex, replyParent, clickedComment, newComments, 2);
         setVotedType("downVote");
       }
-      if (votedType === "downVote" && e.target.id === "upVoteBtn") {
+      if (votedType === "downVote" && e.target.id.startsWith("upVoteBtn")) {
+        // if (votedType === "downVote" && e.target.id === "upVoteBtn") {
         addVote(commentIndex, replyParent, clickedComment, newComments, 2);
         setVotedType("upVote");
       }
