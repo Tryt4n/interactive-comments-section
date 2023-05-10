@@ -23,7 +23,6 @@ export default function CommentBlock({
   const [alreadyVoted, setAlreadyVoted] = useState(false);
   const [votedType, setVotedType] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [wasEdited, setIsWasEdited] = useState(false);
   const [myComment, setMyComment] = useState(comment);
   const [editingCommentText, setEditingCommentText] = useState(comment);
   const [warningInfoVote, setWarningInfoVote] = useState(false);
@@ -85,13 +84,15 @@ export default function CommentBlock({
 
   function updateComment() {
     commentIndex !== -1
-      ? (newComments[commentIndex].content = editingCommentText)
-      : (newComments[replyParent.index].replies[clickedComment.index].content = editingCommentText);
+      ? (newComments[commentIndex].content = editingCommentText) &&
+        (newComments[commentIndex].edited = true)
+      : (newComments[replyParent.index].replies[clickedComment.index].content =
+          editingCommentText) &&
+        (newComments[replyParent.index].replies[clickedComment.index].edited = true);
 
     if (editingCommentText !== "") {
       setMyComment(editingCommentText);
       setIsEditing(!isEditing);
-      setIsWasEdited(true);
 
       setUserData((prevState) => ({
         ...prevState,
@@ -156,7 +157,6 @@ export default function CommentBlock({
           setSelectedCommentId={setSelectedCommentId}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
-          wasEdited={wasEdited}
           isDeleting={isDeleting}
           setIsDeleting={setIsDeleting}
         />

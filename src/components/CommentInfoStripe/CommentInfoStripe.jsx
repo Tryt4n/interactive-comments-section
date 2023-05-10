@@ -16,11 +16,12 @@ export default function CommentInfoStripe({
   setSelectedCommentId,
   isEditing,
   setIsEditing,
-  wasEdited,
   isDeleting,
   setIsDeleting,
 }) {
-  const { isCurrentUser } = useContext(DataContext);
+  const { userData, isCurrentUser, searchForObject } = useContext(DataContext);
+
+  const clickedComment = searchForObject(userData, commentId);
 
   const [formattedDate, setFormattedDate] = useState(
     formatDistanceToNow(new Date(createdAt), { addSuffix: true })
@@ -53,7 +54,9 @@ export default function CommentInfoStripe({
         {isCurrentUser === userInformations.username && (
           <mark className="comment-info-stripe__you-badge">you</mark>
         )}
-        {wasEdited && <span className="comment-info-stripe__edited-badge">Edited</span>}
+        {clickedComment?.edited && (
+          <span className="comment-info-stripe__edited-badge">Edited</span>
+        )}
         <time
           dateTime={createdAt}
           title={createdAt}
