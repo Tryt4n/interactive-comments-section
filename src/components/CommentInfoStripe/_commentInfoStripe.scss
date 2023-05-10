@@ -39,6 +39,8 @@
   &__time-ago {
     color: c.$grayish-blue;
     translate: -0.5rem;
+    @include flex(row, center, center);
+    text-align: center;
   }
 
   &__btn-container {

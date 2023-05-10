@@ -15,6 +15,7 @@ export default function CommentInfoStripe({
   setSelectedCommentId,
   isEditing,
   setIsEditing,
+  wasEdited,
 }) {
   const { isCurrentUser } = useContext(DataContext);
 
@@ -25,7 +26,7 @@ export default function CommentInfoStripe({
   useEffect(() => {
     const interval = setInterval(() => {
       setFormattedDate(formatDistanceToNow(new Date(createdAt), { addSuffix: true }));
-    }, 60100);
+    }, 60000);
 
     return () => clearInterval(interval);
   }, [createdAt]);
@@ -54,6 +55,7 @@ export default function CommentInfoStripe({
           title={createdAt}
           className="comment-info-stripe__time-ago"
         >
+          {wasEdited && <span className="comment-info-stripe__you-text">Edited</span>}
           {formattedDate}
         </time>
       </div>
@@ -68,12 +70,6 @@ export default function CommentInfoStripe({
               isEdit
               isEditing={isEditing}
               setIsEditing={setIsEditing}
-            />
-            <InteractionButton
-              commentId={commentId}
-              isReplyBoxShown={isReplyBoxShown}
-              setIsReplyBoxShown={setIsReplyBoxShown}
-              setSelectedCommentId={setSelectedCommentId}
             />
           </>
         ) : (

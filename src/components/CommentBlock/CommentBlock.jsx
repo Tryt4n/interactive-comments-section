@@ -23,9 +23,18 @@ export default function CommentBlock({
   const [alreadyVoted, setAlreadyVoted] = useState(false);
   const [votedType, setVotedType] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [wasEdited, setIsWasEdited] = useState(false);
   const [myComment, setMyComment] = useState(comment);
   const [editingCommentText, setEditingCommentText] = useState(comment);
   const [warningInfoVote, setWarningInfoVote] = useState(false);
+
+  const newComments = [...userData.comments];
+  //* finding the object with which the interaction is performed
+  const commentIndex = userData.comments.findIndex((comment) => comment.id === commentId);
+  const clickedComment = searchForObject(userData, commentId);
+  const replyParent =
+    clickedComment.parentIndex !== undefined ? userData.comments[clickedComment.parentIndex] : null;
+  //*
 
   function addVote(commentIndex, replyParent, clickedComment, newComments, addedValue) {
     commentIndex !== -1
@@ -40,16 +49,8 @@ export default function CommentBlock({
   }
 
   function handleVote(e) {
-    const commentIndex = userData.comments.findIndex((comment) => comment.id === commentId);
     if (userInformations.username === isCurrentUser) return setWarningInfoVote(true);
 
-    const clickedComment = searchForObject(userData, commentId);
-    const replyParent =
-      clickedComment.parentIndex !== undefined
-        ? userData.comments[clickedComment.parentIndex]
-        : null;
-
-    const newComments = [...userData.comments];
     if (!alreadyVoted) {
       if (e.target.id === "upVoteBtn") {
         addVote(commentIndex, replyParent, clickedComment, newComments, 1);
@@ -80,10 +81,21 @@ export default function CommentBlock({
   function handleEdit(e) {
     setEditingCommentText(e.target.value);
   }
+
   function updateComment() {
+    commentIndex !== -1
+      ? (newComments[commentIndex].content = editingCommentText)
+      : (newComments[replyParent.index].replies[clickedComment.index].content = editingCommentText);
+
     if (editingCommentText !== "") {
       setMyComment(editingCommentText);
       setIsEditing(!isEditing);
+      setIsWasEdited(true);
+
+      setUserData((prevState) => ({
+        ...prevState,
+        comments: newComments,
+      }));
     }
   }
 
@@ -143,6 +155,7 @@ export default function CommentBlock({
           setSelectedCommentId={setSelectedCommentId}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
+          wasEdited={wasEdited}
         />
         {!isEditing ? (
           <p className="comment-block__comment-text">
