@@ -33,12 +33,10 @@ export default function CommentInfoStripe({
     }, 60000);
 
     return () => clearInterval(interval);
-  }, [createdAt]);
-
-  const asideID = crypto.randomUUID()
+  }, [createdAt]);)
   
   return (
-    <aside id={asideID} className="comment-info-stripe">
+    <aside className="comment-info-stripe" aria-label="information bar">
       <div className="comment-info-stripe__informations-container">
         <img
           src={userInformations.image.png}
