@@ -36,10 +36,7 @@ export default function CommentInfoStripe({
   }, [createdAt]);
 
   return (
-    <aside
-      className="comment-info-stripe"
-      aria-label="Informative Bar"
-    >
+    <aside className="comment-info-stripe">
       <div className="comment-info-stripe__informations-container">
         <img
           src={userInformations.image.png}

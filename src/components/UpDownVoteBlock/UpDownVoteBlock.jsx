@@ -1,6 +1,8 @@
 export default function UpDownVoteBlock({ score, handleVote }) {
   const voteUpLabelID = crypto.randomUUID();
   const voteDownLabelID = crypto.randomUUID();
+  const votesOutputID = crypto.randomUUID();
+
   return (
     <div
       className="up-down-vote-block"
@@ -18,7 +20,7 @@ export default function UpDownVoteBlock({ score, handleVote }) {
         +
       </button>
       <span
-        id="votes-output"
+        id={votesOutputID}
         className="up-down-vote-block__votes-text"
         aria-label="Votes"
       >
