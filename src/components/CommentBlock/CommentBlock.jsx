@@ -131,6 +131,7 @@ export default function CommentBlock({
 
   return (
     <article className="comment-block">
+      <h2 className="visually-hidden">comment</h2>
       <UpDownVoteBlock
         score={score}
         commentId={commentId}

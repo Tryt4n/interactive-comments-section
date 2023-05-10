@@ -18,6 +18,7 @@ export default function CommentSection({ commentData }) {
 
   return (
     <section className="comment-section">
+      <h2 className="visually-hidden">Comment with replies</h2>
       <CommentBlock
         key={commentId}
         commentId={commentId}

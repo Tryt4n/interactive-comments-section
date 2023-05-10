@@ -22,7 +22,6 @@ export default function UpDownVoteBlock({ score, handleVote }) {
       <span
         id={votesOutputID}
         className="up-down-vote-block__votes-text"
-        aria-label="Votes"
       >
         {score}
       </span>
