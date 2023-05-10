@@ -11,10 +11,10 @@ export default function UpDownVoteBlock({ score, handleVote }) {
       <button
         className="up-down-vote-block__btn"
         type="button"
-        aria-controls="votes-output"
+        aria-controls={votesOutputID}
         aria-label="Up Vote"
         aria-labelledby={voteUpLabelID}
-        aria-describedby="votes-output"
+        aria-describedby={votesOutputID}
         onClick={handleVote}
       >
         +
@@ -29,10 +29,10 @@ export default function UpDownVoteBlock({ score, handleVote }) {
       <button
         className="up-down-vote-block__btn"
         type="button"
-        aria-controls="votes-output"
+        aria-controls={votesOutputID}
         aria-label="Down Vote"
         aria-labelledby={voteDownLabelID}
-        aria-describedby="votes-output"
+        aria-describedby={votesOutputID}
         onClick={handleVote}
       >
         -
