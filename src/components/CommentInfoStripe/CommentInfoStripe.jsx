@@ -33,7 +33,7 @@ export default function CommentInfoStripe({
     }, 60000);
 
     return () => clearInterval(interval);
-  }, [createdAt]);)
+  }, [createdAt]);
   
   return (
     <aside className="comment-info-stripe" aria-label="information bar">
