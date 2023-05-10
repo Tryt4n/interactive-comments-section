@@ -58,7 +58,7 @@ export default function CommentInfoStripe({
           <span className="comment-info-stripe__edited-badge">Edited</span>
         )}
         <time
-          dateTime={createdAt}
+          dateTime={new Date(createdAt).toISOString()}
           title={createdAt}
           className="comment-info-stripe__time-ago"
         >

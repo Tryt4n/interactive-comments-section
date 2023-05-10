@@ -81,6 +81,7 @@ export default function AddCommentBlock({
       className={`add-comment-block ${btnText !== "send" ? "comment-active" : ""}`}
       ref={commentBlockRef}
     >
+      <h2 className="visually-hidden">Add new Comment</h2>
       <img
         src={currentUser.image.png}
         alt="My Avatar"
