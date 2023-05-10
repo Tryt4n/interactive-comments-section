@@ -40,9 +40,9 @@ export default function CommentBlock({
   }
 
   function handleVote(e) {
+    const commentIndex = userData.comments.findIndex((comment) => comment.id === commentId);
     if (userInformations.username === isCurrentUser) return setWarningInfoVote(true);
 
-    const commentIndex = userData.comments.findIndex((comment) => comment.id === commentId);
     const clickedComment = searchForObject(userData, commentId);
     const replyParent =
       clickedComment.parentIndex !== undefined

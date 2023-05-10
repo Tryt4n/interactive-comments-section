@@ -69,6 +69,12 @@ export default function CommentInfoStripe({
               isEditing={isEditing}
               setIsEditing={setIsEditing}
             />
+            <InteractionButton
+              commentId={commentId}
+              isReplyBoxShown={isReplyBoxShown}
+              setIsReplyBoxShown={setIsReplyBoxShown}
+              setSelectedCommentId={setSelectedCommentId}
+            />
           </>
         ) : (
           <InteractionButton

@@ -52,7 +52,8 @@ export default function AddCommentBlock({
       const newReplyObj = {
         id: crypto.randomUUID(),
         content: newComment,
-        createdAt: "1 second ago",
+        // createdAt: "1 second ago",
+        createdAt: date,
         score: 0,
         parentIndex: parentComment.index,
         index: parentComment.replies.length,
