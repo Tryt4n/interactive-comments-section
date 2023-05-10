@@ -52,7 +52,6 @@ export default function AddCommentBlock({
       const newReplyObj = {
         id: crypto.randomUUID(),
         content: newComment,
-        // createdAt: "1 second ago",
         createdAt: date,
         score: 0,
         parentIndex: parentComment.index,
@@ -92,6 +91,7 @@ export default function AddCommentBlock({
         aria-label="Add a comment"
         className="add-comment-block__textarea"
         minRows={3}
+        autoFocus
         value={newComment}
         onChange={handleCommentChange}
       />

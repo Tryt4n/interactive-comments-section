@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import DataContext from "../../context/DataContext";
 
 import AddCommentBlock from "../AddCommentBlock/AddCommentBlock";
@@ -6,10 +6,6 @@ import CommentSection from "../CommentSection/CommentSection";
 
 export default function App() {
   const { userData } = useContext(DataContext);
-
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
 
   return (
     <main className="container">

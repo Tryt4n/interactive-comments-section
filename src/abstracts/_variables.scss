@@ -1,3 +1,7 @@
+@use "../base/functions" as func;
+
 $main-transition: 300ms ease-in-out;
 $block-border-radius: 0.5rem;
 $block-inner-space: 1rem;
+
+$vote-block-height-on-mobile: func.rem(36);

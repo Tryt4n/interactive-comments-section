@@ -27,6 +27,7 @@ export default function CommentBlock({
   const [myComment, setMyComment] = useState(comment);
   const [editingCommentText, setEditingCommentText] = useState(comment);
   const [warningInfoVote, setWarningInfoVote] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const newComments = [...userData.comments];
   //* finding the object with which the interaction is performed
@@ -156,6 +157,8 @@ export default function CommentBlock({
           isEditing={isEditing}
           setIsEditing={setIsEditing}
           wasEdited={wasEdited}
+          isDeleting={isDeleting}
+          setIsDeleting={setIsDeleting}
         />
         {!isEditing ? (
           <p className="comment-block__comment-text">

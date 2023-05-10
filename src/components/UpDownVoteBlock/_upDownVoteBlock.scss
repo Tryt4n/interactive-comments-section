@@ -21,8 +21,8 @@
     color: c.$light-grayish-blue;
     transition: v.$main-transition;
     &:first-of-type {
-      padding-bottom: 0.75rem;
       @media (width > func.rem(768)) {
+        padding-bottom: 0.75rem;
         border-top-left-radius: v.$block-border-radius;
         border-top-right-radius: v.$block-border-radius;
       }
@@ -41,6 +41,9 @@
         border-bottom-right-radius: v.$block-border-radius;
       }
     }
+    @media (width <= func.rem(768)) {
+      padding-bottom: 0.75rem;
+    }
     &:where(:hover, :focus-visible) {
       color: c.$moderate-blue;
     }
@@ -55,7 +58,7 @@
       width: 100%;
     }
     @media (width <= func.rem(768)) {
-      height: 2rem;
+      height: v.$vote-block-height-on-mobile;
       display: grid;
       place-content: center;
     }

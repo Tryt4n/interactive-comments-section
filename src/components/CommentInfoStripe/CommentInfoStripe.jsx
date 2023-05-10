@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import DataContext from "../../context/DataContext";
 
 import InteractionButton from "../InteractionButton/InteractionButton";
+import DeleteModal from "../DeleteModal/DeleteModal";
 
 import { formatDistanceToNow } from "date-fns";
 
@@ -16,6 +17,8 @@ export default function CommentInfoStripe({
   isEditing,
   setIsEditing,
   wasEdited,
+  isDeleting,
+  setIsDeleting,
 }) {
   const { isCurrentUser } = useContext(DataContext);
 
@@ -48,14 +51,14 @@ export default function CommentInfoStripe({
           </a>
         </h2>
         {isCurrentUser === userInformations.username && (
-          <mark className="comment-info-stripe__you-text">you</mark>
+          <mark className="comment-info-stripe__you-badge">you</mark>
         )}
+        {wasEdited && <span className="comment-info-stripe__edited-badge">Edited</span>}
         <time
           dateTime={createdAt}
           title={createdAt}
           className="comment-info-stripe__time-ago"
         >
-          {wasEdited && <span className="comment-info-stripe__you-text">Edited</span>}
           {formattedDate}
         </time>
       </div>
@@ -64,7 +67,7 @@ export default function CommentInfoStripe({
           <>
             <InteractionButton
               isDelete
-              handleDeleteComment={handleDeleteComment}
+              setIsDeleting={setIsDeleting}
             />
             <InteractionButton
               isEdit
@@ -81,6 +84,13 @@ export default function CommentInfoStripe({
           />
         )}
       </div>
+      {isDeleting && (
+        <DeleteModal
+          isDeleting={isDeleting}
+          setIsDeleting={setIsDeleting}
+          handleDeleteComment={handleDeleteComment}
+        />
+      )}
     </aside>
   );
 }

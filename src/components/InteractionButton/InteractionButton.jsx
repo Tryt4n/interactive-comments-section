@@ -1,13 +1,13 @@
 export default function InteractionButton({
   isEdit,
   isDelete,
-  handleDeleteComment,
   commentId,
   isReplyBoxShown,
   setIsReplyBoxShown,
   setSelectedCommentId,
   isEditing,
   setIsEditing,
+  setIsDeleting,
 }) {
   return (
     <>
@@ -45,7 +45,7 @@ export default function InteractionButton({
       {isDelete && (
         <button
           className="interaction-button"
-          onClick={handleDeleteComment}
+          onClick={() => setIsDeleting(true)}
         >
           <img
             src="/icons/icon-delete.svg"

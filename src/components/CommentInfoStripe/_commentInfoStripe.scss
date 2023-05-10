@@ -26,14 +26,22 @@
     color: c.$dark-blue;
   }
 
-  &__you-text {
-    padding: 0.15em 0.5em 0.3em 0.5em;
+  &__you-badge,
+  &__edited-badge {
     background: c.$moderate-blue;
+    padding-inline: 0.5rem;
     border-radius: 0.15rem;
     font-size: 0.75rem;
     line-height: 0.75rem;
     color: c.$white;
-    translate: -0.5rem;
+  }
+
+  &__you-badge {
+    padding-block: 0.25em 0.35em;
+  }
+
+  &__edited-badge {
+    padding-block: 0.3em;
   }
 
   &__time-ago {
