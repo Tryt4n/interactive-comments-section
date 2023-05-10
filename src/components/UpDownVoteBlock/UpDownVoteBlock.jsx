@@ -1,16 +1,17 @@
 export default function UpDownVoteBlock({ score, handleVote }) {
+  const voteUpLabelID = crypto.randomUUID();
+  const voteDownLabelID = crypto.randomUUID();
   return (
     <div
       className="up-down-vote-block"
       role="group"
     >
       <button
-        id="upVoteBtn"
         className="up-down-vote-block__btn"
         type="button"
         aria-controls="votes-output"
         aria-label="Up Vote"
-        aria-labelledby="voteup-label"
+        aria-labelledby={voteUpLabelID}
         aria-describedby="votes-output"
         onClick={handleVote}
       >
@@ -24,12 +25,11 @@ export default function UpDownVoteBlock({ score, handleVote }) {
         {score}
       </span>
       <button
-        id="downVoteBtn"
         className="up-down-vote-block__btn"
         type="button"
         aria-controls="votes-output"
         aria-label="Down Vote"
-        aria-labelledby="votedown-label"
+        aria-labelledby={voteDownLabelID}
         aria-describedby="votes-output"
         onClick={handleVote}
       >
@@ -37,13 +37,13 @@ export default function UpDownVoteBlock({ score, handleVote }) {
       </button>
 
       <span
-        id="voteup-label"
+        id={voteUpLabelID}
         className="visually-hidden"
       >
         Button to increase the number of votes
       </span>
       <span
-        id="votedown-label"
+        id={voteDownLabelID}
         className="visually-hidden"
       >
         Button to decrease the number of votes
