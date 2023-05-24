@@ -1,4 +1,5 @@
 # Frontend Mentor - Interactive comments section
+[Link to the page](https://interactive-comments-react-sass.netlify.app/)
 
 ![Design preview for the Interactive comments section coding challenge](./design/desktop-preview.jpg)
 
